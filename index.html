@@ -1,147 +1,99 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Naomi Gift Drop</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+  <meta charset="UTF-8">
+  <title>Naomi's Gifts</title>
+  <style>
+    body {
+      background: black;
+      color: #ff00ff;
+      font-family: 'Courier New', monospace;
+      text-align: center;
+      padding-top: 100px;
+    }
 
-  body {
-    margin: 0;
-    background-color: #000;
-    color: #ff4ddb; /* rosa Matrix */
-    font-family: 'Share Tech Mono', monospace;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-  }
+    h1 {
+      margin-bottom: 40px;
+      font-size: 20px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
 
-  /* Matrix style animated text */
-  .matrix-text {
-    font-size: 3rem;
-    letter-spacing: 0.1em;
-    text-shadow:
-      0 0 5px #ff4ddb,
-      0 0 10px #ff4ddb,
-      0 0 20px #ff4ddb,
-      0 0 40px #ff4ddb;
-    animation: flicker 2.5s infinite alternate;
-    margin-bottom: 40px;
-  }
+    .btn {
+      display: block;
+      margin: 20px auto;
+      padding: 15px 25px;
+      font-size: 16px;
+      color: #fff;
+      background: #00ccff;
+      border: 2px solid #00ffff;
+      border-radius: 10px;
+      text-decoration: none;
+      width: 250px;
+      transition: 0.3s;
+      box-shadow: 0 0 15px #00ccff;
+      cursor: pointer;
+    }
 
-  @keyframes flicker {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.6; }
-  }
+    .btn:hover {
+      background: #0099cc;
+      box-shadow: 0 0 25px #00ffff;
+    }
 
-  /* Frasi animate */
-  .phrase {
-    font-size: 1.8rem;
-    color: #ff4ddb;
-    opacity: 0;
-    animation-fill-mode: forwards;
-    text-align: center;
-    max-width: 90vw;
-    margin-bottom: 50px;
-  }
+    #passwordBox {
+      display: none;
+      margin-top: 20px;
+    }
 
-  /* Riquadri azzurro acceso */
-  .button-container {
-    background-color: #00bfff; /* azzurro acceso */
-    border-radius: 15px;
-    width: 300px;
-    margin: 15px 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    box-shadow:
-      0 0 10px #00bfff,
-      0 0 20px #00bfff;
-    transition: box-shadow 0.3s ease;
-  }
+    input {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      margin-bottom: 10px;
+    }
 
-  .button-container:hover {
-    box-shadow:
-      0 0 20px #00ffff,
-      0 0 30px #00ffff,
-      0 0 40px #00ffff;
-  }
-
-  /* Pulsanti */
-  .link-button {
-    background-color: transparent;
-    border: 2px solid white;
-    color: white;
-    font-size: 1.3rem;
-    padding: 12px 30px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-family: 'Share Tech Mono', monospace;
-    text-decoration: none;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .link-button:hover {
-    background-color: #00ffff;
-    color: black;
-    box-shadow:
-      0 0 10px #00ffff,
-      0 0 20px #00ffff;
-  }
-</style>
+    #error {
+      color: red;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
 
-<div class="matrix-text">NAOMI</div>
+  <h1>GIFTS TO YOUR GODDESS, SHOW YOUR DEVOTION</h1>
 
-<div id="phrase1" class="phrase">OBEY THE GODDESS NAOMI</div>
-<div id="phrase2" class="phrase">SEND GIFTS TO YOUR GODDESS, SHOW YOUR DEVOTION</div>
+  <!-- Bottone protetto -->
+  <a href="#" class="btn" onclick="showPasswordBox()">Unlock Your Reward</a>
 
-<div class="button-container">
-  <a href="https://www.mediafire.com/file/mkbdjhm1ha2hb2i/NEWLINK.zip/file" target="_blank" class="link-button" id="mediafireBtn">Download Gifts (Mediafire)</a>
-</div>
+  <!-- Input password -->
+  <div id="passwordBox">
+    <input type="password" id="password" placeholder="Enter password">
+    <button class="btn" onclick="checkPassword()">Unlock</button>
+    <p id="error"></p>
+  </div>
 
-<div class="button-container">
-  <a href="https://throne.com/goddessnaomi2d" target="_blank" class="link-button" id="throneBtn">Visit Your Goddess on Throne</a>
-</div>
+  <!-- Bottone Throne -->
+  <a href="TUO_LINK_THRONE" target="_blank" class="btn">Visit Your Goddess on Throne</a>
 
-<script>
-  const phrase1 = document.getElementById('phrase1');
-  const phrase2 = document.getElementById('phrase2');
-  phrase1.style.opacity = 0;
-  phrase2.style.opacity = 0;
+  <script>
+    const correctPassword = "obeyatnaomi"; // 🔑 password che dai a chi dona
+    const mediafireLink = "TUO_LINK_MEDIAFIRE"; // 🔗 link al pacchetto
 
-  // Timeline animations for phrases:
-  // Phrase1 fade in 0.5s, visible 3s, fade out 0.5s
-  // Phrase2 fade in 0.5s, visible 3s, fade out 0.5s
+    function showPasswordBox() {
+      document.getElementById("passwordBox").style.display = "block";
+    }
 
-  function fadeIn(element, duration) {
-    element.style.transition = `opacity ${duration}ms ease-in`;
-    element.style.opacity = 1;
-  }
-  function fadeOut(element, duration) {
-    element.style.transition = `opacity ${duration}ms ease-out`;
-    element.style.opacity = 0;
-  }
-
-  async function animatePhrases() {
-    await new Promise(r => setTimeout(r, 500)); // small delay
-    fadeIn(phrase1, 500);
-    await new Promise(r => setTimeout(r, 3500));
-    fadeOut(phrase1, 500);
-    await new Promise(r => setTimeout(r, 500));
-    fadeIn(phrase2, 500);
-    await new Promise(r => setTimeout(r, 3500));
-    fadeOut(phrase2, 500);
-  }
-
-  animatePhrases();
-</script>
+    function checkPassword() {
+      const input = document.getElementById("password").value;
+      if (input === correctPassword) {
+        window.open(mediafireLink, "_blank");
+      } else {
+        document.getElementById("error").innerText = "Wrong password. Try again.";
+      }
+    }
+  </script>
 
 </body>
 </html>
