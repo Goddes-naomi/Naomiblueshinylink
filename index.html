@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -56,13 +56,6 @@
       margin:4px 0 6px 0;
       text-transform:uppercase;
       letter-spacing:2px;
-    }
-
-    p.lead{
-      color:#ddd;
-      max-width:720px;
-      margin:8px 0 28px;
-      line-height:1.4;
     }
 
     /* bottom fixed button area */
@@ -169,12 +162,10 @@
 <body>
 
   <div class="wrap">
-    <div class="top-text">Manda per ricevere la chiave della tua ricompensa</div>
+    <div class="top-text">Send to receive the key to your reward</div>
 
     <h1 class="title">💎 BLUE SHINY LINK 💎</h1>
-    <p class="lead">You watched me build it… piece by piece. Tonight at 21:00 the Blue Shiny Link will be released. Donate on Throne and get the key to your reward.</p>
-
-    <!-- (eventuale contenuto extra/immagini qui) -->
+    <!-- Removed the paragraph under the title -->
   </div>
 
   <!-- bottom fixed buttons -->
@@ -186,24 +177,22 @@
   <!-- password modal -->
   <div class="modal-overlay" id="modal">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <h3 id="modalTitle">Inserisci la chiave</h3>
-      <p>Digita la password che hai ricevuto dopo la donazione.</p>
-      <input id="pw" type="password" inputmode="text" autocomplete="off" placeholder="Inserisci la password" />
+      <h3 id="modalTitle">Enter the key</h3>
+      <p>Type the password you received after your donation.</p>
+      <input id="pw" type="password" inputmode="text" autocomplete="off" placeholder="Enter password" />
       <div class="actions">
         <button class="btn" id="confirmBtn">Unlock</button>
-        <button class="btn secondary" id="closeBtn">Chiudi</button>
+        <button class="btn secondary" id="closeBtn">Close</button>
       </div>
       <div class="error" id="err"></div>
-      <div class="small-note">Password: la dai solo tu a chi dona.</div>
+      <div class="small-note">Password: only you give it to those who donate.</div>
     </div>
   </div>
 
   <script>
-    // CONFIG
     const CORRECT = "obeyatnaomi";
     const MEDIAFIRE = "https://www.mediafire.com/file/9honge8ptnraauc/bluelink.zip/file";
 
-    // DOM
     const unlockBtn = document.getElementById('unlockBtn');
     const modal = document.getElementById('modal');
     const closeBtn = document.getElementById('closeBtn');
@@ -211,7 +200,6 @@
     const pwInput = document.getElementById('pw');
     const err = document.getElementById('err');
 
-    // show modal
     unlockBtn.addEventListener('click', () => {
       modal.style.display = 'flex';
       err.textContent = '';
@@ -219,24 +207,21 @@
       setTimeout(()=> pwInput.focus(), 200);
     });
 
-    // close modal
     closeBtn.addEventListener('click', () => {
       modal.style.display = 'none';
     });
 
-    // unlock action
     function tryUnlock(){
       const val = pwInput.value.trim();
       if(!val){
-        err.textContent = 'Inserisci la password.';
+        err.textContent = 'Enter the password.';
         return;
       }
       if(val === CORRECT){
-        // open mediafire in new tab
         window.open(MEDIAFIRE, '_blank', 'noopener');
         modal.style.display = 'none';
       } else {
-        err.textContent = 'Password errata. Riprova.';
+        err.textContent = 'Wrong password. Try again.';
         pwInput.value = '';
         pwInput.focus();
       }
@@ -244,29 +229,18 @@
 
     confirmBtn.addEventListener('click', tryUnlock);
 
-    // enter key on input
     pwInput.addEventListener('keydown', (e) => {
       if(e.key === 'Enter') tryUnlock();
       if(e.key === 'Escape') modal.style.display = 'none';
     });
 
-    // close modal on overlay click (but not when clicking modal)
     modal.addEventListener('click', (e) => {
       if(e.target === modal) modal.style.display = 'none';
     });
 
-    // accessibility: allow unlocking for keyboard users
     unlockBtn.addEventListener('keydown', (e) => {
       if(e.key === 'Enter' || e.key === ' ') unlockBtn.click();
     });
-
-    // Optional: prevent zoom on double tap on mobile (basic)
-    let lastTouch = 0;
-    document.addEventListener('touchend', (e) => {
-      const now = Date.now();
-      if (now - lastTouch <= 300) e.preventDefault();
-      lastTouch = now;
-    }, {passive:false});
   </script>
 </body>
 </html>
